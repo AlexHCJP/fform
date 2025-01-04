@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:fform/fform.dart';
 import 'package:flutter/widgets.dart';
 import 'package:meta/meta.dart';
@@ -76,7 +78,7 @@ abstract class FFormField<T, E> extends ValueNotifier<T> {
   /// }
   /// ```
   /// {@endtemplate}
-  E? validator(T value);
+  FutureOr<E?> validator(T value);
 
   /// {@template is_valid_property}
   /// Indicates whether the field's value is valid.

@@ -64,7 +64,9 @@ abstract class FForm extends ChangeNotifier {
     List<FFormField<_NullObject, _NullObject>>? fields,
     List<FForm>? subForms,
   })  : _fields = fields ?? [],
-        _subForms = subForms ?? [] {
+        _subForms = subForms ?? [],
+        _status = FFormStatus.initial
+  {
     for (final field in _fields) {
       field.addListener(notifyListeners);
     }
@@ -102,7 +104,7 @@ abstract class FForm extends ChangeNotifier {
 
   bool _hasCheck = false;
 
-  FFormStatus _status = FFormStatus.initial;
+  FFormStatus _status;
 
   /// Provides read-only access to the current status of the form.
   ///
@@ -250,7 +252,6 @@ abstract class FForm extends ChangeNotifier {
   /// {@endtemplate}
   @nonVirtual
   bool check() {
-    _changeStatus(FFormStatus.loading);
     Future.wait([for (final element in _allFields) element.check()]);
     return _check();
   }

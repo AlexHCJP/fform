@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:fform/fform.dart';
 
 enum EmailError {
@@ -18,20 +20,14 @@ enum EmailError {
   }
 }
 
-class EmailField extends FFormField<String, EmailError>
-    with  AsyncField<String, EmailError>, CacheField<String, EmailError> {
+class EmailField extends FFormField<String, EmailError> with CacheField<String, EmailError> {
   EmailField({required String value}) : super(value);
 
   @override
-  EmailError? validator(value) {
+  FutureOr<EmailError?> validator(value) {
     if (value.isEmpty) return EmailError.empty;
+    if (value == 'alexganbert@gmail.com') return Future.value(EmailError.email);
     return null;
   }
 
-  @override
-  Future<EmailError?> asyncValidator(value) async =>
-      await Future.delayed(const Duration(seconds: 1), () {
-        if (value == 'alexganbert@gmail.com') return null;
-        return EmailError.email;
-      });
 }

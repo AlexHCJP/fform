@@ -66,9 +66,9 @@ class _CreateQuestScreenState extends State<CreateQuestScreen> {
         );
       }
       final firstInvalidField = form.firstInvalidField;
-      if (firstInvalidField is KeyedField) {
+      if (firstInvalidField case KeyedField field) {
         Scrollable.ensureVisible(
-          (firstInvalidField as KeyedField).key.currentContext!,
+          field.key.currentContext!,
           alignment: 0.2,
           duration: const Duration(milliseconds: 500),
         );
