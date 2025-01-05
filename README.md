@@ -1,13 +1,11 @@
-# FForm Package 🚀
+![Logo](screenshots/big-frame.png)
+![Frame](pictures/contributors.png)
 
 ![Pub Version](https://img.shields.io/pub/v/fform)
 ![License](https://img.shields.io/github/license/AlexHCJP/fform)
 ![Issues](https://img.shields.io/github/issues/AlexHCJP/fform)
 ![Coverage](https://img.shields.io/codecov/c/github/contributors-company/fform)
 ![Stars](https://img.shields.io/github/stars/AlexHCJP/fform)
-![Contributors](https://img.shields.io/github/contributors/AlexHCJP/fform)
-![Watchers](https://img.shields.io/github/watchers/AlexHCJP/fform)
-![Forks](https://img.shields.io/github/forks/AlexHCJP/fform)
 
 
 - [Introduction](#getting-started-with-fform-)
@@ -79,10 +77,10 @@ FForm is a high-level Flutter package designed to make form creation and managem
 
 ## Previews
 
-|                                                              |                                                              |                                                              |
-|--------------------------------------------------------------|--------------------------------------------------------------|--------------------------------------------------------------|
-| ![](https://github.com/AlexHCJP/fform/raw/main/pictures/1.gif) | ![](https://github.com/AlexHCJP/fform/raw/main/pictures/2.gif) | ![](https://github.com/AlexHCJP/fform/raw/main/pictures/3.gif) |
-| ![](https://github.com/AlexHCJP/fform/raw/main/pictures/4.gif) |                                                              |                                                              |
+|                     |                     |                     |
+|---------------------|---------------------|---------------------|
+| ![](pictures/1.gif) | ![](pictures/2.gif) | ![](pictures/3.gif) |
+| ![](pictures/4.gif) |                     |                     |
 
 
 ## Usage Examples

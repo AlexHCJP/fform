@@ -58,8 +58,10 @@ class FFormProvider<T extends FForm> extends InheritedNotifier<T> {
   /// }
   /// ```
   /// {@endtemplate}
-  static T? maybeOf<T extends FForm>(BuildContext context,
-          {bool listen = false}) =>
+  static T? maybeOf<T extends FForm>(
+    BuildContext context, {
+    bool listen = false,
+  }) =>
       listen
           ? context
               .dependOnInheritedWidgetOfExactType<FFormProvider<T>>()
@@ -88,20 +90,4 @@ class FFormProvider<T extends FForm> extends InheritedNotifier<T> {
   /// {@endtemplate}
   static T of<T extends FForm>(BuildContext context, {bool listen = true}) =>
       maybeOf<T>(context, listen: listen) ?? _notFound();
-
-  /// {@template update_should_notify_method}
-  /// Determines whether the [FFormProvider] should notify its dependents when the
-  /// [notifier] changes.
-  ///
-  /// Returns `true` if the [notifier] is different from the [oldWidget]'s notifier.
-  ///
-  /// ### Parameters
-  /// - [oldWidget]: The previous widget instance to compare with.
-  ///
-  /// ### Example
-  /// This method is typically not called directly.
-  /// {@endtemplate}
-  @override
-  bool updateShouldNotify(covariant InheritedNotifier<T> oldWidget) =>
-      notifier != oldWidget.notifier;
 }
