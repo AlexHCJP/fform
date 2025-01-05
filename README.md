@@ -4,7 +4,7 @@
 ![Pub Version](https://img.shields.io/pub/v/fform)
 ![License](https://img.shields.io/github/license/AlexHCJP/fform)
 ![Issues](https://img.shields.io/github/issues/AlexHCJP/fform)
-![Coverage](https://img.shields.io/codecov/c/github/contributors-company/fform)
+![Codecov](https://codecov.io/gh/contributors-company/fform/branch/master/graph/badge.svg?token=FY0FEJJRDX)
 ![Stars](https://img.shields.io/github/stars/AlexHCJP/fform)
 
 
