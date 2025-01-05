@@ -7,12 +7,12 @@ name: Dart
 
 on:
   pull_request:
-    branches: [ "main" ]
+    branches: [ "master" ]
     paths:
       - 'lib/**'
       - '.github/**'
   push:
-    branches: [ "main" ]
+    branches: [ "master" ]
     paths:
       - '.github/**'
 
