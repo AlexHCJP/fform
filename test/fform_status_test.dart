@@ -19,7 +19,7 @@ class MockForm extends FForm {
 }
 
 void main() {
-  group('FFormStatus Tests', () {
+  group('FForm Status Tests', () {
     late MockForm form;
 
     setUp(() {
@@ -77,7 +77,9 @@ void main() {
 
       form = MockForm(subForms: [subForm]);
 
-      await form.checkAsync();
+      expect(subForm.status, equals(FFormStatus.initial));
+      form.check();
+      expect(subForm.status, equals(FFormStatus.exception));
       expect(form.status, equals(FFormStatus.exception));
     });
 
@@ -90,9 +92,8 @@ void main() {
       form = MockForm(
         subForms: [subForm],
         fields: [MockFFormField('Field 1')],
-      );
+      )..check();
 
-      await form.checkAsync();
       expect(form.status, equals(FFormStatus.success));
     });
   });

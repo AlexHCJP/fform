@@ -235,5 +235,14 @@ void main() {
       MockForm(fields: [MockFFormField('Valid')], subForms: [MockForm()])
           .dispose();
     });
+
+    test('FForm Add and Remove Listeners', () async {
+      final form = MockForm(fields: [], subForms: [MockForm()]);
+      final field = MockFFormField('Valid');
+
+      form
+        ..addField(field)
+        ..removeField(field);
+    });
   });
 }

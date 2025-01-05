@@ -24,10 +24,6 @@ import 'package:fform/fform.dart';
 /// }
 /// ```
 /// {@endtemplate}
-@Deprecated('''
-The validator method in the FFormField class is designed to validate the current value of the field. It returns an exception of type E if the value is invalid, otherwise it returns null. The method signature uses FutureOr<E?>, which means it can return either a synchronous result (E?) or an asynchronous result (Future<E?>).  Here is a brief explanation of how it works:  
-Synchronous Validation: If the validation logic is simple and can be performed immediately, the method can return an E? directly.
-''')
 mixin AsyncField<T, E> on FFormField<T, E> {
   /// {@template async_validator_method}
   /// An asynchronous validator that should be overridden to provide custom validation logic.

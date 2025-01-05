@@ -78,7 +78,7 @@ abstract class FFormField<T, E> extends ValueNotifier<T> {
   /// }
   /// ```
   /// {@endtemplate}
-  FutureOr<E?> validator(T value);
+  E? validator(T value);
 
   /// {@template is_valid_property}
   /// Indicates whether the field's value is valid.

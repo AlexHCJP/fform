@@ -1,15 +1,11 @@
+![Logo](screenshots/logo-fform.png)
 ![Frame](screenshots/big-frame.png)
-![Contributors](pictures/contributors.png)
-
 
 ![Pub Version](https://img.shields.io/pub/v/fform)
 ![License](https://img.shields.io/github/license/AlexHCJP/fform)
 ![Issues](https://img.shields.io/github/issues/AlexHCJP/fform)
 ![Coverage](https://img.shields.io/codecov/c/github/contributors-company/fform)
 ![Stars](https://img.shields.io/github/stars/AlexHCJP/fform)
-![Contributors](https://img.shields.io/github/contributors/AlexHCJP/fform)
-![Watchers](https://img.shields.io/github/watchers/AlexHCJP/fform)
-![Forks](https://img.shields.io/github/forks/AlexHCJP/fform)
 
 
 - [Introduction](#getting-started-with-fform-)
@@ -21,6 +17,7 @@
   - [`FFormField`](#fformfield)
     - [Example](#example)
     - [`KeyedField`](#and-you-can-add-keyedfield-mixin-to-get-a-unique-key-for-identifying-the-form-field-widget)
+    - [`AsyncField`](#and-you-can-use-asyncvalidator)
     - [`CachedField`](#cached-value-for-field)
   - [`FForm`](#fform)
     - [Example](#example-1)
@@ -80,10 +77,10 @@ FForm is a high-level Flutter package designed to make form creation and managem
 
 ## Previews
 
-|                                                              |                                                              |                                                              |
-|--------------------------------------------------------------|--------------------------------------------------------------|--------------------------------------------------------------|
+|                     |                     |                     |
+|---------------------|---------------------|---------------------|
 | ![](pictures/1.gif) | ![](pictures/2.gif) | ![](pictures/3.gif) |
-| ![](pictures/4.gif) |                                                              |                                                              |
+| ![](pictures/4.gif) |                     |                     |
 
 
 ## Usage Examples
@@ -140,6 +137,29 @@ class EmailField extends FFormField<String, EmailError> with KeyedField {
 
 // and get GlobalKey -> form.email.key 
 ```
+
+#### And you can use AsyncValidator
+
+```dart
+class EmailField extends FFormField<String, EmailError> with AsyncField<String, EmailError> {
+
+  EmailField({required String value}) : super(value);
+
+  @override
+  EmailError? validator(value) {
+    if (value.isEmpty) return EmailError.empty;
+    return null;
+  }
+
+  @override
+  Future<EmailError?> asyncValidator(value) async {
+    await Future.delayed(Duration(seconds: 1));
+    if (!value.contains('@')) return EmailError.not;
+    return null;
+  }
+}
+```
+
 
 #### Cached value for field
 

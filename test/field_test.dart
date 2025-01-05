@@ -33,7 +33,6 @@ void main() {
 
     test('Validator should detect invalid values and set exception', () {
       final field = TestFFormField(-1);
-
       expect(field.isValid, false);
       expect(field.exception, isNotNull);
       expect(field.exception!.isValid, false);

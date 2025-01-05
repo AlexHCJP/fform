@@ -4,8 +4,6 @@ import 'package:collection/collection.dart';
 import 'package:fform/fform.dart';
 import 'package:flutter/foundation.dart';
 
-typedef _NullObject = Object?;
-
 /// Represents the various states of a form (`FForm`).
 enum FFormStatus {
   /// The initial state of the form before any validation or action occurs.
@@ -61,12 +59,10 @@ abstract class FForm extends ChangeNotifier {
   /// final form = MyForm();
   /// ```
   FForm({
-    List<FFormField<_NullObject, _NullObject>>? fields,
+    List<FFormField<Object?, Object?>>? fields,
     List<FForm>? subForms,
   })  : _fields = fields ?? [],
-        _subForms = subForms ?? [],
-        _status = FFormStatus.initial
-  {
+        _subForms = subForms ?? [] {
     for (final field in _fields) {
       field.addListener(notifyListeners);
     }
@@ -75,21 +71,13 @@ abstract class FForm extends ChangeNotifier {
     }
   }
 
-  final List<FFormField<_NullObject, _NullObject>> _fields;
-
-  /// {@template fields_list}
-  /// The list of fields within the form.
-  ///
-  /// ### Example
-  /// ```dart
-  /// final field = MyFormField();
-  /// form.fields.add(field);
-  /// ```
-  /// {@endtemplate}
-  List<FFormField<_NullObject, _NullObject>> get fields =>
-      List.unmodifiable(_fields);
+  final List<FFormField<Object?, Object?>> _fields;
 
   final List<FForm> _subForms;
+
+  bool _hasCheck = false;
+
+  FFormStatus _status = FFormStatus.initial;
 
   /// {@template subforms_list}
   /// The list of subforms contained within this form.
@@ -102,10 +90,18 @@ abstract class FForm extends ChangeNotifier {
   /// {@endtemplate}
   List<FForm> get subForms => List.unmodifiable(_subForms);
 
-  bool _hasCheck = false;
+  /// {@template fields_list}
+  /// The list of fields within the form.
+  ///
+  /// ### Example
+  /// ```dart
+  /// final field = MyFormField();
+  /// form.fields.add(field);
+  /// ```
+  /// {@endtemplate}
+  List<FFormField<Object?, Object?>> get fields => List.unmodifiable(_fields);
 
-  FFormStatus _status;
-
+  /// {@template fform_status}
   /// Provides read-only access to the current status of the form.
   ///
   /// Use this getter to check the current form state and
@@ -120,12 +116,8 @@ abstract class FForm extends ChangeNotifier {
   ///   FFormStatus.exception => print('exception'),
   /// };
   /// ```
+  /// {@endtemplate}
   FFormStatus get status => _status;
-
-  void _changeStatus(FFormStatus status) {
-    _status = status;
-    notifyListeners();
-  }
 
   /// {@template has_check_property}
   /// Indicates whether the form has been checked at least once.
@@ -140,147 +132,10 @@ abstract class FForm extends ChangeNotifier {
   @nonVirtual
   bool get hasCheck => _hasCheck;
 
-  /// {@template observer_field}
-  /// An optional observer for monitoring form checks.
-  ///
-  /// ### Example
-  /// ```dart
-  /// FForm.observer = MyFormObserver();
-  /// ```
-  /// {@endtemplate}
-  static FFormObserver? observer;
-
-  @override
-  void dispose() {
-    for (final field in _fields) {
-      field
-        ..removeListener(notifyListeners)
-        ..dispose();
-    }
-    for (final form in _subForms) {
-      form
-        ..removeListener(notifyListeners)
-        ..dispose();
-    }
-    super.dispose();
-  }
-
-  /// {@template add_field_method}
-  /// Adds a field to the form and starts listening for changes.
-  ///
-  /// ### Example
-  /// ```dart
-  /// final field = MyFormField();
-  /// form.addField(field);
-  /// ```
-  /// {@endtemplate}
-  @nonVirtual
-  void addField(FFormField<_NullObject, _NullObject> field) {
-    _fields.add(field);
-    field.addListener(notifyListeners);
-  }
-
-  /// {@template remove_field_method}
-  /// Removes a field from the form and stops listening for changes.
-  ///
-  /// ### Example
-  /// ```dart
-  /// form.removeField(field);
-  /// ```
-  /// {@endtemplate}
-  @nonVirtual
-  void removeField(FFormField<_NullObject, _NullObject> field) {
-    _fields.remove(field);
-    field.removeListener(notifyListeners);
-  }
-
-  /// {@template add_subform_method}
-  /// Adds a subform to the form and starts listening for changes.
-  ///
-  /// ### Example
-  /// ```dart
-  /// final subForm = MySubForm();
-  /// form.addSubForm(subForm);
-  /// ```
-  /// {@endtemplate}
-  @nonVirtual
-  void addSubForm(FForm form) {
-    _subForms.add(form);
-    form.addListener(notifyListeners);
-  }
-
-  /// {@template remove_subform_method}
-  /// Removes a subform from the form and stops listening for changes.
-  ///
-  /// ### Example
-  /// ```dart
-  /// form.removeSubForm(subForm);
-  /// ```
-  /// {@endtemplate}
-  @nonVirtual
-  void removeSubForm(FForm form) {
-    _subForms.remove(form);
-    form.removeListener(notifyListeners);
-  }
-
-  /// {@template check_async_method}
-  /// Asynchronously checks if the form is valid by validating all fields and subforms.
-  ///
-  /// Returns `true` if the form is valid after validation.
-  ///
-  /// ### Example
-  /// ```dart
-  /// final isValid = await form.checkAsync();
-  /// ```
-  /// {@endtemplate}
-  @nonVirtual
-  Future<bool> checkAsync() async {
-    _changeStatus(FFormStatus.loading);
-    await Future.forEach(_allFields, (fields) => fields.check());
-    return _check();
-  }
-
-  /// {@template check_method}
-  /// Synchronously checks if the form is valid by initiating validation on all fields and subforms.
-  ///
-  /// Returns `true` if the form is valid after validation.
-  ///
-  /// ### Example
-  /// ```dart
-  /// final isValid = form.check();
-  /// ```
-  /// {@endtemplate}
-  @nonVirtual
-  bool check() {
-    Future.wait([for (final element in _allFields) element.check()]);
-    return _check();
-  }
-
-  bool _check() {
-    observer?.check(this);
-    _hasCheck = true;
-    _changeStatus(isValid ? FFormStatus.success : FFormStatus.exception);
-    return isValid;
-  }
-
-  /// {@template get_field_method}
-  /// Retrieves the first field of the specified type `T`.
-  ///
-  /// Throws a `StateError` if no such field is found.
-  ///
-  /// ### Example
-  /// ```dart
-  /// final textField = form.get<MyTextField>();
-  /// ```
-  /// {@endtemplate}
-  @nonVirtual
-  T get<T extends FFormField<_NullObject, _NullObject>>() =>
-      _fields.whereType<T>().cast<T>().first;
-
-  List<FFormField<_NullObject, _NullObject>> get _allFields =>
+  List<FFormField<Object?, Object?>> get _allFields =>
       [..._fields, ..._subFormFields];
 
-  List<FFormField<_NullObject, _NullObject>> get _subFormFields =>
+  List<FFormField<Object?, Object?>> get _subFormFields =>
       [for (final subForm in _subForms) ...subForm.fields];
 
   /// {@template answer_fields_property}
@@ -292,7 +147,7 @@ abstract class FForm extends ChangeNotifier {
   /// ```
   /// {@endtemplate}
   @nonVirtual
-  Iterable<_NullObject> get answerFields => _fields.map((e) => e.exception);
+  Iterable<Object?> get answerFields => _fields.map((e) => e.exception);
 
   /// {@template answers_subforms_property}
   /// A list of exceptions (answers) from the fields in the subforms.
@@ -303,7 +158,7 @@ abstract class FForm extends ChangeNotifier {
   /// ```
   /// {@endtemplate}
   @nonVirtual
-  List<_NullObject> get answersSubForms => [
+  List<Object?> get answersSubForms => [
         for (final subForm in _subForms) ...subForm.answerFields,
       ];
 
@@ -316,7 +171,7 @@ abstract class FForm extends ChangeNotifier {
   /// ```
   /// {@endtemplate}
   @nonVirtual
-  List<_NullObject> get answers => [
+  List<Object?> get answers => [
         ...answerFields,
         ...answersSubForms,
       ];
@@ -330,7 +185,7 @@ abstract class FForm extends ChangeNotifier {
   /// ```
   /// {@endtemplate}
   @nonVirtual
-  Iterable<_NullObject> get exceptionFields => answerFields.nonNulls;
+  Iterable<Object?> get exceptionFields => answerFields.nonNulls;
 
   /// {@template exception_subforms_property}
   /// A list of non-null exceptions from the fields in the subforms.
@@ -341,7 +196,7 @@ abstract class FForm extends ChangeNotifier {
   /// ```
   /// {@endtemplate}
   @nonVirtual
-  Iterable<_NullObject> get exceptionSubForms => answersSubForms.nonNulls;
+  Iterable<Object?> get exceptionSubForms => answersSubForms.nonNulls;
 
   /// {@template exceptions_property}
   /// A combined list of all non-null exceptions from the fields and subforms.
@@ -352,7 +207,7 @@ abstract class FForm extends ChangeNotifier {
   /// ```
   /// {@endtemplate}
   @nonVirtual
-  Iterable<_NullObject> get exceptions => answers.nonNulls;
+  Iterable<Object?> get exceptions => answers.nonNulls;
 
   /// {@template is_valid_property}
   /// Indicates whether all fields in the form are valid.
@@ -399,7 +254,7 @@ abstract class FForm extends ChangeNotifier {
   /// ```
   /// {@endtemplate}
   @nonVirtual
-  FFormField<_NullObject, _NullObject>? get firstInvalidField =>
+  FFormField<Object?, Object?>? get firstInvalidField =>
       _allFields.firstWhereOrNull((field) => field.isInvalid);
 
   /// {@template last_invalid_field_property}
@@ -414,6 +269,155 @@ abstract class FForm extends ChangeNotifier {
   /// ```
   /// {@endtemplate}
   @nonVirtual
-  FFormField<_NullObject, _NullObject>? get lastInvalidField =>
+  FFormField<Object?, Object?>? get lastInvalidField =>
       _allFields.lastWhereOrNull((field) => field.isInvalid);
+
+  void _changeStatus(FFormStatus status) {
+    _status = status;
+    notifyListeners();
+  }
+
+  /// {@template observer_field}
+  /// An optional observer for monitoring form checks.
+  ///
+  /// ### Example
+  /// ```dart
+  /// FForm.observer = MyFormObserver();
+  /// ```
+  /// {@endtemplate}
+  static FFormObserver? observer;
+
+  @override
+  void dispose() {
+    for (final field in _fields) {
+      field
+        ..removeListener(notifyListeners)
+        ..dispose();
+    }
+    for (final form in _subForms) {
+      form
+        ..removeListener(notifyListeners)
+        ..dispose();
+    }
+    super.dispose();
+  }
+
+  /// {@template add_field_method}
+  /// Adds a field to the form and starts listening for changes.
+  ///
+  /// ### Example
+  /// ```dart
+  /// final field = MyFormField();
+  /// form.addField(field);
+  /// ```
+  /// {@endtemplate}
+  @nonVirtual
+  void addField(FFormField<Object?, Object?> field) {
+    _fields.add(field);
+    field.addListener(notifyListeners);
+  }
+
+  /// {@template remove_field_method}
+  /// Removes a field from the form and stops listening for changes.
+  ///
+  /// ### Example
+  /// ```dart
+  /// form.removeField(field);
+  /// ```
+  /// {@endtemplate}
+  @nonVirtual
+  void removeField(FFormField<Object?, Object?> field) {
+    _fields.remove(field);
+    field.removeListener(notifyListeners);
+  }
+
+  /// {@template add_subform_method}
+  /// Adds a subform to the form and starts listening for changes.
+  ///
+  /// ### Example
+  /// ```dart
+  /// final subForm = MySubForm();
+  /// form.addSubForm(subForm);
+  /// ```
+  /// {@endtemplate}
+  @nonVirtual
+  void addSubForm(FForm form) {
+    _subForms.add(form);
+    form.addListener(notifyListeners);
+  }
+
+  /// {@template remove_subform_method}
+  /// Removes a subform from the form and stops listening for changes.
+  ///
+  /// ### Example
+  /// ```dart
+  /// form.removeSubForm(subForm);
+  /// ```
+  /// {@endtemplate}
+  @nonVirtual
+  void removeSubForm(FForm form) {
+    _subForms.remove(form);
+    form.removeListener(notifyListeners);
+  }
+
+  /// {@template check_async_method}
+  /// Asynchronously checks if the form is valid by validating all fields and subforms.
+  ///
+  /// Returns `true` if the form is valid after validation.
+  ///
+  /// ### Example
+  /// ```dart
+  /// final isValid = await form.checkAsync();
+  /// ```
+  /// {@endtemplate}
+  @nonVirtual
+  Future<bool> checkAsync() async {
+    _changeStatus(FFormStatus.loading);
+    await Future.forEach(_fields, (field) async => await field.check());
+    await Future.forEach(_subForms, (form) async => await form.checkAsync());
+    return _check();
+  }
+
+  /// {@template check_method}
+  /// Synchronously checks if the form is valid by initiating validation on all fields and subforms.
+  ///
+  /// Returns `true` if the form is valid after validation.
+  ///
+  /// ### Example
+  /// ```dart
+  /// final isValid = form.check();
+  /// ```
+  /// {@endtemplate}
+  @nonVirtual
+  bool check() {
+    for (final field in _fields) {
+      field.check();
+    }
+
+    for (final form in _subForms) {
+      form.check();
+    }
+    return _check();
+  }
+
+  bool _check() {
+    observer?.check(this);
+    _hasCheck = true;
+    _changeStatus(isValid ? FFormStatus.success : FFormStatus.exception);
+    return isValid;
+  }
+
+  /// {@template get_field_method}
+  /// Retrieves the first field of the specified type `T`.
+  ///
+  /// Throws a `StateError` if no such field is found.
+  ///
+  /// ### Example
+  /// ```dart
+  /// final textField = form.get<MyTextField>();
+  /// ```
+  /// {@endtemplate}
+  @nonVirtual
+  T get<T extends FFormField<Object?, Object?>>() =>
+      _fields.whereType<T>().cast<T>().first;
 }
