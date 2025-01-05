@@ -1,5 +1,5 @@
-![Logo](screenshots/logo-fform.png)
-![Frame](screenshots/big-frame.png)
+![Logo](screenshots/big-frame.png)
+![Frame](pictures/contributors.png)
 
 ![Pub Version](https://img.shields.io/pub/v/fform)
 ![License](https://img.shields.io/github/license/AlexHCJP/fform)
