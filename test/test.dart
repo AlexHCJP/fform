@@ -8,12 +8,15 @@ import 'src/unit_tests/field_test.dart' as field_test;
 import 'src/unit_tests/form_test.dart' as form_test;
 import 'src/unit_tests/observer_test.dart' as observer_test;
 import 'src/widget_tests/builder_test.dart' as builder_test;
+import 'src/widget_tests/focus_field_test.dart' as focus_field_test;
 import 'src/widget_tests/provider_test.dart' as provider_test;
+
 
 void main() {
   group('Widget test', () {
     provider_test.main();
     builder_test.main();
+    focus_field_test.main();
   });
   group('Unit Test', () {
     field_test.main();
