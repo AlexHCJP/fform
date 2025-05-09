@@ -28,7 +28,7 @@ class _CardTaskState extends State<CardTask> {
       child: Card(
         child: FFormBuilder<CreateQuestTaskForm>(
           form: widget.form,
-          builder: (context, form) {
+          builder: (context, form, child) {
             return Column(
               children: [
                 Text('Task ${widget.index + 1}'),

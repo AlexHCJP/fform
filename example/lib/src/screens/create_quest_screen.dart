@@ -73,7 +73,7 @@ class _CreateQuestScreenState extends State<CreateQuestScreen> {
           duration: const Duration(milliseconds: 500),
         );
       }
-      if(firstInvalidField case FocusField field) {
+      if (firstInvalidField case FocusField field) {
         field.focus.requestFocus();
       }
     }
@@ -118,7 +118,7 @@ class _CreateQuestScreenState extends State<CreateQuestScreen> {
         padding: const EdgeInsets.all(20),
         child: FFormBuilder<CreateQuestForm>(
           form: form,
-          builder: (BuildContext context, CreateQuestForm form) {
+          builder: (BuildContext context, CreateQuestForm form, child) {
             return Column(
               children: [
                 TextField(

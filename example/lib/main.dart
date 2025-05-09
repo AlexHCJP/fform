@@ -10,7 +10,8 @@ class MyFFormObserver extends FFormObserver {
   @override
   void check(FForm form) {
     if (kDebugMode) {
-      print('Form has been checked and is ${form.isValid ? 'valid' : 'invalid'}');
+      print(
+          'Form has been checked and is ${form.isValid ? 'valid' : 'invalid'}');
     }
   }
 }

@@ -18,7 +18,10 @@ import 'package:flutter/widgets.dart';
 /// ```
 /// {@endtemplate}
 typedef FFormWidgetBuilder<T extends FForm> = Widget Function(
-    BuildContext context, T form);
+  BuildContext context,
+  T form,
+  Widget? child,
+);
 
 /// {@template fform_builder_class}
 /// A widget that builds and manages the state of a form.
@@ -47,6 +50,7 @@ class FFormBuilder<T extends FForm> extends StatelessWidget {
   const FFormBuilder({
     required this.form,
     required this.builder,
+    this.child,
     super.key,
   });
 
@@ -81,6 +85,31 @@ class FFormBuilder<T extends FForm> extends StatelessWidget {
   /// {@endtemplate}
   final FFormWidgetBuilder<T> builder;
 
+  /// {@template child_property}
+  /// An optional constant child widget that does not depend on the form state.
+  ///
+  /// This widget is passed to the [builder] function and will not be rebuilt when the form notifies listeners.
+  ///
+  /// ### Example
+  /// ```dart
+  /// FFormBuilder<MyForm>(
+  ///   form: form,
+  ///   child: const Text('Static footer'),
+  ///   builder: (context, form, child) {
+  ///     return Column(
+  ///       children: [
+  ///         TextField(
+  ///           onChanged: form.update,
+  ///         ),
+  ///         if (child != null) child,
+  ///       ],
+  ///     );
+  ///   },
+  /// );
+  /// ```
+  /// {@endtemplate}
+  final Widget? child;
+
   /// {@template build_method}
   /// Builds the widget tree by listening to the form's state changes and providing
   /// the form to its descendants.
@@ -99,16 +128,16 @@ class FFormBuilder<T extends FForm> extends StatelessWidget {
   /// ```
   /// {@endtemplate}
   @override
-  Widget build(BuildContext context) => ListenableBuilder(
-        listenable: form,
-        builder: (context, child) => FFormProvider<T>(
-          form: form,
-          child: Builder(
-            builder: (context) => builder(
-              context,
-              form,
-            ),
+  Widget build(BuildContext context) => FFormProvider<T>(
+        form: form,
+        child: ListenableBuilder(
+          listenable: form,
+          builder: (context, child) => builder(
+            context,
+            form,
+            child,
           ),
+          child: child,
         ),
       );
 }

@@ -86,7 +86,7 @@ class _ExceptionMultiScreenState extends State<ExceptionMultiScreen> {
           padding: const EdgeInsets.all(20),
           child: FFormBuilder(
             form: _form,
-            builder: (context, form) {
+            builder: (context, form, child) {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

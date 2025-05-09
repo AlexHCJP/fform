@@ -73,7 +73,7 @@ class _MultiScreenState extends State<MultiScreen> {
         padding: const EdgeInsets.all(20),
         child: FFormBuilder<MultiDrawForm>(
           form: _form,
-          builder: (context, form) {
+          builder: (context, form, child) {
             return Column(
               children: [
                 DrawCard(form: form, controller: _multiDrawController),
