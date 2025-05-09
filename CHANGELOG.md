@@ -1,4 +1,4 @@
-## 5.2.4-dev
+## 5.2.5-dev
 
 * child attribute for FFormBuilder
 
