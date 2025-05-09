@@ -1,3 +1,7 @@
+## 5.2.5
+
+* child attribute for FFormBuilder
+
 ## 5.2.3
 
 * Create Focus Field

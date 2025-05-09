@@ -14,11 +14,12 @@ void main() {
       await tester.pumpWidget(
         FFormBuilder<MockForm>(
           form: form,
-          builder: (context, providedForm) {
+          builder: (context, providedForm, child) {
             // Check that the form is correctly provided to the builder
             expect(providedForm, form);
-            return const SizedBox();
+            return child!;
           },
+          child: const SizedBox(),
         ),
       );
     });
@@ -30,7 +31,7 @@ void main() {
       await tester.pumpWidget(
         FFormBuilder<MockForm>(
           form: form,
-          builder: (context, providedForm) {
+          builder: (context, providedForm, child) {
             // Mark as rebuilt when the builder is called
             didRebuild = true;
             return const SizedBox();
@@ -58,7 +59,7 @@ void main() {
       await tester.pumpWidget(
         FFormBuilder<MockForm>(
           form: form,
-          builder: (context, providedForm) {
+          builder: (context, providedForm, child) {
             // Try accessing form from FFormProvider
             final formFromProvider = FFormProvider.of<MockForm>(context);
 
@@ -77,7 +78,7 @@ void main() {
       await tester.pumpWidget(
         FFormBuilder<MockForm>(
           form: form,
-          builder: (context, providedForm) {
+          builder: (context, providedForm, child) {
             rebuildCount++;
             return const SizedBox();
           },
@@ -103,7 +104,7 @@ void main() {
       await tester.pumpWidget(
         FFormBuilder<MockForm>(
           form: form,
-          builder: (context, providedForm) {
+          builder: (context, providedForm, child) {
             rebuildCount++;
             return const SizedBox();
           },

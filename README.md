@@ -54,15 +54,25 @@ Don't forget to run `flutter pub get` in your terminal to install the package.
 
 FForm is a high-level Flutter package designed to make form creation and management a breeze, with simplified field validation. It offers two main components: `FFormField` and `FFormBuilder`, that together bring ease and flexibility to your form handling in Flutter apps.
 
-- `FFormField<T, E>`: A base class for all form fields supporting values, on-the-fly validation, and change handling.
-- `FFormBuilder<F extends FForm>`: A widget that constructs and manages the form state, utilizing streams to refresh the UI dynamically as data changes.
-- `FForm`: A base class for creating custom form classes, allowing you to add specific methods and properties to your forms.
-- `FFormException`: A base class for creating custom exceptions for form fields, enabling you to define custom validation rules and error messages.
-- `FFormProvider`: A widget that allows you to access the form in the widget tree without passing it as a parameter.
-- `KeyedField`: A mixin that provides a unique key for identifying the form field widget, used to manage the state of the widget and access it in the widget tree.
-- `AsyncField`: A mixin that provides asynchronous validation for form fields, allowing you to validate data against external sources or APIs.
-- `CachedField`: A mixin that provides cached value for field, used to manage the state of the widget and access it in the widget tree.
-- `FFormObserver`: A widget that allows you to observe the form state and trigger side effects based on the form's state changes.
+🧱 **Core** (Logic and Form Model)
+- **FForm** — the base class for forms, managing fields, validation, and state.
+- **FFormField<T, E>** — a generic form field supporting values, errors, and reactions to changes.
+- **FFormException** — the base class for exceptions that define validation errors.
+- **FFormObserver** — a static observer that monitors events across all forms (e.g., for debugging, logging, side-effects).
+
+🧩 **Widget** (UI Binding Widgets)
+- **FFormBuilder<F extends FForm>** — binds the form to the UI, updating the interface on changes.
+- **FFormProvider** — provides access to the form through BuildContext.
+
+🎯 **Mixin** (Additional Behavior for Fields)
+- **KeyedField** — adds a unique key for identifying the field in the tree.
+- **AsyncField** — supports asynchronous validation of the field.
+- **CachedField** — stores the previous value for reuse.
+- **FocusedField** — tracks focus, allowing reactions to focus gain/loss.
+
+## Structure
+
+![](pictures/structure.png)
 
 ## Why It Rocks 🎸
 
@@ -75,6 +85,7 @@ FForm is a high-level Flutter package designed to make form creation and managem
 - **AsyncValidator**: Supports asynchronous validation for form fields, allowing you to validate data against external sources or APIs.
 - **CachedField**: Provides cached value for field, used to manage the state of the widget and access it in the widget tree.
 - **FFormObserver**: Allows you to observe the form state and trigger side effects based on the form's state changes.
+
 
 
 ## Previews
@@ -173,7 +184,7 @@ void _submit() {
 Widget build(BuildContext context) {
   return FFormBuilder<LoginForm>(
     form: _form,
-    builder: (context, form) {
+    builder: (context, form, child) {
       EmailField email = form.email; // or FFormProvider.of<LoginForm>(context).get<NameField>()
       
       return Column(
@@ -212,7 +223,7 @@ void _submit() {
 Widget build(BuildContext context) {
   return ListenableBuilder<LoginForm>(
     listenable: _form,
-    builder: (context, form) {
+    builder: (context, form, child) {
       EmailField email = form.email; // or FFormProvider.of<LoginForm>(context).get<NameField>()
       
       return Column(

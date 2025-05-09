@@ -17,7 +17,8 @@ enum TitleError {
   }
 }
 
-class TitleField extends FFormField<String, TitleError> with KeyedField<String, TitleError> {
+class TitleField extends FFormField<String, TitleError>
+    with KeyedField<String, TitleError> {
   bool isRequired;
 
   TitleField.dirty({
