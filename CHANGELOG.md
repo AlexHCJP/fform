@@ -1,3 +1,7 @@
+## 5.2.3
+
+* Create Focus Field
+
 ## 5.2.3-dev
 
 * Create Focus Field

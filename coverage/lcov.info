@@ -1,3 +1,8 @@
+SF:lib/src/core/fform_exception.dart
+DA:16,2
+LF:1
+LH:1
+end_of_record
 SF:lib/src/core/fform_field.dart
 DA:23,8
 DA:24,8
@@ -111,11 +116,6 @@ DA:420,1
 DA:422,4
 LF:81
 LH:81
-end_of_record
-SF:lib/src/core/fform_exception.dart
-DA:16,2
-LF:1
-LH:1
 end_of_record
 SF:lib/src/mixins/cached_validator_field.dart
 DA:42,2
