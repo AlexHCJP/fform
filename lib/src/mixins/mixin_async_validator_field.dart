@@ -47,7 +47,7 @@ mixin AsyncField<T, E> on FFormField<T, E> {
   /// Validates the field asynchronously and updates the exception state.
   ///
   /// It first performs synchronous validation using [super.check]. If that passes,
-  /// it proceeds to asynchronous validation by calling [asyncValidator].
+  /// it proceeds to asynchronous validation by calling [AsyncField.asyncValidator].
   ///
   /// Returns a [Future] that completes with `true` if the field is valid after validation,
   /// or `false` if it is invalid.

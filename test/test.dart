@@ -11,7 +11,6 @@ import 'src/widget_tests/builder_test.dart' as builder_test;
 import 'src/widget_tests/focus_field_test.dart' as focus_field_test;
 import 'src/widget_tests/provider_test.dart' as provider_test;
 
-
 void main() {
   group('Widget test', () {
     provider_test.main();

@@ -16,9 +16,6 @@
 - [Usage Example](#usage-examples)
   - [`FFormField`](#fformfield)
     - [Example](#example)
-    - [`KeyedField`](#and-you-can-add-keyedfield-mixin-to-get-a-unique-key-for-identifying-the-form-field-widget)
-    - [`AsyncField`](#and-you-can-use-asyncvalidator)
-    - [`CachedField`](#cached-value-for-field)
   - [`FForm`](#fform)
     - [Example](#example-1)
   - [`FFormBuilder`](#fformbuilder)
@@ -29,6 +26,11 @@
     - [Example](#example-4)
   - [`FFormObserver`](#fformobserver)
     - [Example](#example-5)
+  - [FFormField mixins](#fformfield-mixins)
+    - [`KeyedField`](#and-you-can-add-keyedfield-mixin-to-get-a-unique-key-for-identifying-the-form-field-widget)
+    - [`AsyncField`](#and-you-can-use-asyncvalidator)
+    - [`CachedField`](#cached-value-for-field)
+    - [`FocusField`](#focused-field)
   - [`FFormStatus`](#fformstatus)
     - [Enum Values](#enum-values)
     - [Example](#example-6)
@@ -118,62 +120,6 @@ class EmailField extends FFormField<String, EmailError> {
     if (value.isEmpty) return EmailError.empty;
     return null;
   }
-}
-```
-
-#### And you can add KeyedField mixin to get a unique key for identifying the form field widget.
-
-```dart
-class EmailField extends FFormField<String, EmailError> with KeyedField {
-
-  EmailField({required String value}) : super(value);
-
-  @override
-  EmailError? validator(value) {
-    if (value.isEmpty) return EmailError.empty;
-    return null;
-  }
-}
-
-// and get GlobalKey -> form.email.key 
-```
-
-#### And you can use AsyncValidator
-
-```dart
-class EmailField extends FFormField<String, EmailError> with AsyncField<String, EmailError> {
-
-  EmailField({required String value}) : super(value);
-
-  @override
-  EmailError? validator(value) {
-    if (value.isEmpty) return EmailError.empty;
-    return null;
-  }
-
-  @override
-  Future<EmailError?> asyncValidator(value) async {
-    await Future.delayed(Duration(seconds: 1));
-    if (!value.contains('@')) return EmailError.not;
-    return null;
-  }
-}
-```
-
-
-#### Cached value for field
-
-```dart
-class EmailField extends FFormField<String, EmailError> with CachedField<String, EmailError> {
-
-  EmailField({required String value}) : super(value);
-
-  @override
-  EmailError? validator(value) {
-    if (value.isEmpty) return EmailError.empty;
-    return null;
-  }
-
 }
 ```
 
@@ -366,6 +312,95 @@ class MyFFormObserver extends FFormObserver {
   }
 }
 ```
+
+### FFormField mixins
+
+
+#### And you can add KeyedField mixin to get a unique key for identifying the form field widget.
+
+```dart
+class EmailField extends FFormField<String, EmailError> with KeyedField {
+
+  EmailField({required String value}) : super(value);
+
+  @override
+  EmailError? validator(value) {
+    if (value.isEmpty) return EmailError.empty;
+    return null;
+  }
+}
+
+// and get GlobalKey -> form.email.key 
+```
+
+#### And you can use AsyncValidator
+
+```dart
+class EmailField extends FFormField<String, EmailError> with AsyncField<String, EmailError> {
+
+  EmailField({required String value}) : super(value);
+
+  @override
+  EmailError? validator(value) {
+    if (value.isEmpty) return EmailError.empty;
+    return null;
+  }
+
+  @override
+  Future<EmailError?> asyncValidator(value) async {
+    await Future.delayed(Duration(seconds: 1));
+    if (!value.contains('@')) return EmailError.not;
+    return null;
+  }
+}
+
+// final field = EmailField();
+// if(await field.check()) {
+//     
+// }
+```
+
+
+#### Cached value for field
+
+```dart
+class EmailField extends FFormField<String, EmailError> with CachedField<String, EmailError> {
+
+  EmailField({required String value}) : super(value);
+
+  @override
+  EmailError? validator(value) {
+    if (value.isEmpty) return EmailError.empty;
+    return null;
+  }
+
+}
+```
+
+#### Focused Field
+
+```dart
+class EmailField extends FFormField<String, EmailError> with FocusField<String, EmailError> {
+
+  EmailField({required String value}) : super(value);
+
+  @override
+  EmailError? validator(value) {
+    if (value.isEmpty) return EmailError.empty;
+    return null;
+  }
+
+}
+
+// final field = EmailField();
+// if(field.check()) {
+//   ....
+// } else {
+//    field.focus.requestFocus();
+// }
+```
+
+
 
 ### `FFormStatus`
 
