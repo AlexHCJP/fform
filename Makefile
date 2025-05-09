@@ -4,7 +4,7 @@ PWD   := $(shell pwd)
 .DEFAULT_GOAL := all
 .PHONY: all
 all: ## build pipeline
-all: setup format analyze test dartdoc
+all: setup format analyze test dartdoc releasedryrun
 
 .PHONY: precommit
 precommit: ## validate the branch before commit
@@ -107,4 +107,10 @@ endef
 .PHONY: dartdoc
 dartdoc: ## generate dart documentation
 	$(call print-target)
-	dartdoc
+	@rm -rf doc
+	@fvm dart doc .
+
+.PHONY: releasedryrun
+releasedryrun:
+	$(call print-target)
+	@fvm dart pub publish -n

@@ -73,6 +73,9 @@ class _CreateQuestScreenState extends State<CreateQuestScreen> {
           duration: const Duration(milliseconds: 500),
         );
       }
+      if(firstInvalidField case FocusField field) {
+        field.focus.requestFocus();
+      }
     }
   }
 

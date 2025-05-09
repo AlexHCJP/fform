@@ -42,5 +42,5 @@ mixin KeyedField<T, E> on FFormField<T, E> {
   /// }
   /// ```
   /// {@endtemplate}
-  final GlobalKey key = GlobalKey();
+  late final GlobalKey key = GlobalKey();
 }
