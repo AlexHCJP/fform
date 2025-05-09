@@ -107,4 +107,5 @@ endef
 .PHONY: dartdoc
 dartdoc: ## generate dart documentation
 	$(call print-target)
-	dartdoc
+	@rm -rf doc
+	@fvm dart doc .

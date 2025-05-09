@@ -63,7 +63,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "5.1.3-dev"
+    version: "5.1.5"
   fform_validator:
     dependency: "direct main"
     description:
