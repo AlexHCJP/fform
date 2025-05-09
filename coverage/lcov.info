@@ -117,7 +117,7 @@ DA:16,2
 LF:1
 LH:1
 end_of_record
-SF:lib/src/mixins/cached_validator.dart
+SF:lib/src/mixins/cached_validator_field.dart
 DA:42,2
 DA:44,4
 DA:45,4
@@ -131,7 +131,14 @@ DA:58,2
 LF:10
 LH:10
 end_of_record
-SF:lib/src/mixins/mixin_async_validator.dart
+SF:lib/src/mixins/focus_field.dart
+DA:7,0
+DA:9,0
+DA:10,0
+LF:3
+LH:0
+end_of_record
+SF:lib/src/mixins/mixin_async_validator_field.dart
 DA:65,1
 DA:67,1
 DA:69,3
