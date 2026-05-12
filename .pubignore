@@ -49,3 +49,4 @@ analysis_options.yaml
 Makefile
 doc/
 screenshots/
+coverage/
