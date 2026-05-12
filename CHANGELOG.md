@@ -1,3 +1,7 @@
+## 5.2.6
+
+* update readme.md
+
 ## 5.2.5
 
 * child attribute for FFormBuilder

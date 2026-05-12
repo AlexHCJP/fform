@@ -4,7 +4,7 @@
 ![Pub Version](https://img.shields.io/pub/v/fform)
 ![License](https://img.shields.io/github/license/AlexHCJP/fform)
 ![Issues](https://img.shields.io/github/issues/AlexHCJP/fform)
-![Codecov](https://codecov.io/gh/contributors-company/fform/branch/master/graph/badge.svg?token=FY0FEJJRDX)
+![Codecov](https://codecov.io/gh/AlexHCJP/fform/branch/master/graph/badge.svg?token=FY0FEJJRDX)
 ![Stars](https://img.shields.io/github/stars/AlexHCJP/fform)
 
 
@@ -444,4 +444,4 @@ switch(_form.status) {
 
 ## Codecov
 
-![Codecov](https://codecov.io/github/contributors-company/fform/graphs/sunburst.svg?token=FY0FEJJRDX)
+![Codecov](https://codecov.io/github/AlexHCJP/fform/graphs/sunburst.svg?token=FY0FEJJRDX)

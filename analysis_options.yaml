@@ -41,7 +41,6 @@ linter:
   rules:
     # Public packages
     public_member_api_docs: true
-    lines_longer_than_120_chars: true
 
     # Enabling rules
     always_use_package_imports: true
@@ -202,7 +201,6 @@ linter:
     avoid_private_typedef_functions: true
     avoid_positional_boolean_parameters: true
     hash_and_equals: true
-    avoid_equals_and_hash_code_on_mutable_classes: true/recommended.yaml
 
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options
