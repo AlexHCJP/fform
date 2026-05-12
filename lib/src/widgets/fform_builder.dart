@@ -17,11 +17,8 @@ import 'package:flutter/widgets.dart';
 /// }
 /// ```
 /// {@endtemplate}
-typedef FFormWidgetBuilder<T extends FForm> = Widget Function(
-  BuildContext context,
-  T form,
-  Widget? child,
-);
+typedef FFormWidgetBuilder<T extends FForm> =
+    Widget Function(BuildContext context, T form, Widget? child);
 
 /// {@template fform_builder_class}
 /// A widget that builds and manages the state of a form.
@@ -129,15 +126,11 @@ class FFormBuilder<T extends FForm> extends StatelessWidget {
   /// {@endtemplate}
   @override
   Widget build(BuildContext context) => FFormProvider<T>(
-        form: form,
-        child: ListenableBuilder(
-          listenable: form,
-          builder: (context, child) => builder(
-            context,
-            form,
-            child,
-          ),
-          child: child,
-        ),
-      );
+    form: form,
+    child: ListenableBuilder(
+      listenable: form,
+      builder: (context, child) => builder(context, form, child),
+      child: child,
+    ),
+  );
 }

@@ -53,8 +53,11 @@ void main() {
       // Повторная проверка с тем же значением
       await field.check();
       expect(field.isValid, isTrue);
-      expect(field.validationCallCount, equals(1),
-          reason: 'Validator should not be called again for the same value');
+      expect(
+        field.validationCallCount,
+        equals(1),
+        reason: 'Validator should not be called again for the same value',
+      );
 
       // Изменение значения на невалидное
       field.value = '';
@@ -66,16 +69,22 @@ void main() {
       // Повторная проверка с тем же невалидным значением
       await field.check();
       expect(field.isValid, isFalse);
-      expect(field.validationCallCount, equals(2),
-          reason:
-              'Validator should not be called again for the same invalid value');
+      expect(
+        field.validationCallCount,
+        equals(2),
+        reason:
+            'Validator should not be called again for the same invalid value',
+      );
 
       // Возврат к предыдущему значению
       field.value = 'initial';
       await field.check();
       expect(field.isValid, isTrue);
-      expect(field.validationCallCount, equals(2),
-          reason: 'Validator should use cached result for previous value');
+      expect(
+        field.validationCallCount,
+        equals(2),
+        reason: 'Validator should use cached result for previous value',
+      );
     });
 
     test('Enforces cache size limit', () async {
@@ -97,8 +106,11 @@ void main() {
       // Проверяем, что первое значение удалено из кэша
       field.value = 'value0';
       await field.check();
-      expect(field.validationCallCount, equals(52),
-          reason: 'Validator should be called again after cache eviction');
+      expect(
+        field.validationCallCount,
+        equals(52),
+        reason: 'Validator should be called again after cache eviction',
+      );
     });
 
     setUp(() {
@@ -123,8 +135,11 @@ void main() {
       // Возврат к предыдущему значению
       mapField.value = {'key': 'value'};
       await mapField.check();
-      expect(mapField.validationCallCount, equals(2),
-          reason: 'Validator should use cached result for previous value');
+      expect(
+        mapField.validationCallCount,
+        equals(2),
+        reason: 'Validator should use cached result for previous value',
+      );
     });
   });
 }

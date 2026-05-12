@@ -74,8 +74,10 @@ void main() {
       final isValid = await field.check();
       expect(isValid, isTrue);
       expect(field.isValid, isTrue);
-      expect(field.exception,
-          isNull); // Так как isValid = true, exception сбрасывается
+      expect(
+        field.exception,
+        isNull,
+      ); // Так как isValid = true, exception сбрасывается
     });
 
     test('Exception with isValid false should be considered invalid', () async {

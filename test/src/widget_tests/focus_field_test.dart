@@ -26,19 +26,16 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: Material(
-            child: Center(
-              child: TextField(
-                focusNode: field.focus,
-              ),
-            ),
+            child: Center(child: TextField(focusNode: field.focus)),
           ),
         ),
       );
 
       expect(tester.testTextInput.isVisible, isFalse);
 
-      FocusScope.of(tester.element(find.byType(TextField)))
-          .requestFocus(field.focus);
+      FocusScope.of(
+        tester.element(find.byType(TextField)),
+      ).requestFocus(field.focus);
       await tester.pump();
 
       expect(tester.testTextInput.isVisible, isTrue);

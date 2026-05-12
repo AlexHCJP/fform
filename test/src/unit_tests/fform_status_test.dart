@@ -15,7 +15,7 @@ class MockFFormField extends FFormField<Object?, String> {
 
 class MockForm extends FForm {
   MockForm({List<FForm>? subForms, List<FFormField<Object?, Object?>>? fields})
-      : super(subForms: subForms ?? [], fields: fields ?? []);
+    : super(subForms: subForms ?? [], fields: fields ?? []);
 }
 
 void main() {
@@ -24,11 +24,13 @@ void main() {
 
     setUp(() {
       // Создаем форму с валидными и невалидными полями
-      form = MockForm(fields: [
-        MockFFormField('Valid Field'), // Валидное поле
-        MockFFormField(''), // Невалидное поле (пустое значение)
-        MockFFormField(null), // Невалидное поле (null значение)
-      ]);
+      form = MockForm(
+        fields: [
+          MockFFormField('Valid Field'), // Валидное поле
+          MockFFormField(''), // Невалидное поле (пустое значение)
+          MockFFormField(null), // Невалидное поле (null значение)
+        ],
+      );
     });
 
     test('Initial status is FFormStatus.initial', () {
@@ -48,11 +50,13 @@ void main() {
 
     test('Status changes to success if all fields are valid', () async {
       // Пересоздаем форму с валидными полями
-      form = MockForm(fields: [
-        MockFFormField('Field 1'),
-        MockFFormField('Field 2'),
-        MockFFormField('Field 3'),
-      ]);
+      form = MockForm(
+        fields: [
+          MockFFormField('Field 1'),
+          MockFFormField('Field 2'),
+          MockFFormField('Field 3'),
+        ],
+      );
 
       await form.checkAsync();
       expect(form.status, equals(FFormStatus.success));
@@ -70,10 +74,12 @@ void main() {
     });
 
     test('Subforms affect overall form status', () async {
-      final subForm = MockForm(fields: [
-        MockFFormField('Subform Field 1'),
-        MockFFormField(''), // Невалидное поле в подформе
-      ]);
+      final subForm = MockForm(
+        fields: [
+          MockFFormField('Subform Field 1'),
+          MockFFormField(''), // Невалидное поле в подформе
+        ],
+      );
 
       form = MockForm(subForms: [subForm]);
 
@@ -84,15 +90,15 @@ void main() {
     });
 
     test('All subforms and fields are valid, form status is success', () async {
-      final subForm = MockForm(fields: [
-        MockFFormField('Subform Field 1'),
-        MockFFormField('Subform Field 2'),
-      ]);
+      final subForm = MockForm(
+        fields: [
+          MockFFormField('Subform Field 1'),
+          MockFFormField('Subform Field 2'),
+        ],
+      );
 
-      form = MockForm(
-        subForms: [subForm],
-        fields: [MockFFormField('Field 1')],
-      )..check();
+      form = MockForm(subForms: [subForm], fields: [MockFFormField('Field 1')])
+        ..check();
 
       expect(form.status, equals(FFormStatus.success));
     });

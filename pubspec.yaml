@@ -16,9 +16,7 @@ funding:
 
 screenshots:
   - description: 'FForm Logo flutter package'
-    path: screenshots/logo-fform.png
-  - description: 'Frame FForm package for flutter forms'
-    path: screenshots/big-frame.png
+    path: logo/logo-fform.png
 
 
 platforms:
@@ -30,8 +28,8 @@ platforms:
   windows:
 
 environment:
-  sdk: '>=3.0.0 <4.0.0'
-  flutter: ">=3.10.0"
+  sdk: ^3.11.0
+  flutter: ">=1.17.0"
 
 dependencies:
   collection: ^1.17.1
@@ -43,6 +41,3 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.0
-
-
-#flutter:

@@ -58,11 +58,9 @@ abstract class FForm extends ChangeNotifier {
   /// ```dart
   /// final form = MyForm();
   /// ```
-  FForm({
-    List<FFormField<Object?, Object?>>? fields,
-    List<FForm>? subForms,
-  })  : _fields = fields ?? [],
-        _subForms = subForms ?? [] {
+  FForm({List<FFormField<Object?, Object?>>? fields, List<FForm>? subForms})
+    : _fields = fields ?? [],
+      _subForms = subForms ?? [] {
     for (final field in _fields) {
       field.addListener(notifyListeners);
     }
@@ -132,11 +130,14 @@ abstract class FForm extends ChangeNotifier {
   @nonVirtual
   bool get hasCheck => _hasCheck;
 
-  List<FFormField<Object?, Object?>> get _allFields =>
-      [..._fields, ..._subFormFields];
+  List<FFormField<Object?, Object?>> get _allFields => [
+    ..._fields,
+    ..._subFormFields,
+  ];
 
-  List<FFormField<Object?, Object?>> get _subFormFields =>
-      [for (final subForm in _subForms) ...subForm.fields];
+  List<FFormField<Object?, Object?>> get _subFormFields => [
+    for (final subForm in _subForms) ...subForm.fields,
+  ];
 
   /// {@template answer_fields_property}
   /// A list of exceptions (answers) from the fields in this form.
@@ -159,8 +160,8 @@ abstract class FForm extends ChangeNotifier {
   /// {@endtemplate}
   @nonVirtual
   List<Object?> get answersSubForms => [
-        for (final subForm in _subForms) ...subForm.answerFields,
-      ];
+    for (final subForm in _subForms) ...subForm.answerFields,
+  ];
 
   /// {@template answers_property}
   /// A combined list of exceptions (answers) from all fields and subforms.
@@ -171,10 +172,7 @@ abstract class FForm extends ChangeNotifier {
   /// ```
   /// {@endtemplate}
   @nonVirtual
-  List<Object?> get answers => [
-        ...answerFields,
-        ...answersSubForms,
-      ];
+  List<Object?> get answers => [...answerFields, ...answersSubForms];
 
   /// {@template exception_fields_property}
   /// A list of non-null exceptions from the fields in this form.
@@ -223,9 +221,9 @@ abstract class FForm extends ChangeNotifier {
   /// {@endtemplate}
   @nonVirtual
   bool get isValid => _allFields.fold(
-        true,
-        (previousValue, field) => previousValue && field.isValid,
-      );
+    true,
+    (previousValue, field) => previousValue && field.isValid,
+  );
 
   /// {@template is_invalid_property}
   /// Indicates whether any field in the form is invalid.

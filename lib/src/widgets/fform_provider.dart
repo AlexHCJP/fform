@@ -33,11 +33,8 @@ class FFormProvider<T extends FForm> extends InheritedNotifier<T> {
   ///   child: MyFormWidget(),
   /// );
   /// ```
-  const FFormProvider({
-    required super.child,
-    required T form,
-    super.key,
-  }) : super(notifier: form);
+  const FFormProvider({required super.child, required T form, super.key})
+    : super(notifier: form);
 
   /// {@template maybe_of_method}
   /// Retrieves the [FForm] instance from the closest [FFormProvider] in the widget tree.
@@ -61,15 +58,13 @@ class FFormProvider<T extends FForm> extends InheritedNotifier<T> {
   static T? maybeOf<T extends FForm>(
     BuildContext context, {
     bool listen = false,
-  }) =>
-      listen
-          ? context
-              .dependOnInheritedWidgetOfExactType<FFormProvider<T>>()
-              ?.notifier
-          : context.getInheritedWidgetOfExactType<FFormProvider<T>>()?.notifier;
+  }) => listen
+      ? context.dependOnInheritedWidgetOfExactType<FFormProvider<T>>()?.notifier
+      : context.getInheritedWidgetOfExactType<FFormProvider<T>>()?.notifier;
 
   static Never _notFound() => throw ArgumentError(
-      'FFormProvider.of() called with a context that does not contain an FFormProvider.');
+    'FFormProvider.of() called with a context that does not contain an FFormProvider.',
+  );
 
   /// {@template of_method}
   /// Retrieves the [FForm] instance from the closest [FFormProvider] in the widget tree.

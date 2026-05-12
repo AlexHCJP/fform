@@ -81,13 +81,11 @@ class TestAsyncField extends FFormField<int, MockException> {
     return null;
   }
 
-  Future<MockException?> getAsyncException() async => await Future.delayed(
-        const Duration(milliseconds: 50),
-        () {
-          if (value < 0) {
-            return MockException(isValid: false);
-          }
-          return null;
-        },
-      );
+  Future<MockException?> getAsyncException() async =>
+      await Future.delayed(const Duration(milliseconds: 50), () {
+        if (value < 0) {
+          return MockException(isValid: false);
+        }
+        return null;
+      });
 }

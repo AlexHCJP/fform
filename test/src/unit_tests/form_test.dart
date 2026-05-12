@@ -16,7 +16,7 @@ class MockFFormField extends FFormField<Object?, String> {
 
 class MockForm extends FForm {
   MockForm({List<FForm>? subForms, List<FFormField<Object?, Object?>>? fields})
-      : super(subForms: subForms ?? [], fields: fields ?? []);
+    : super(subForms: subForms ?? [], fields: fields ?? []);
 }
 
 void main() {
@@ -50,55 +50,66 @@ void main() {
       expect(form.isValid, true);
     });
 
-    test('Async validation works and form becomes valid after corrections',
-        () async {
-      final form = MockForm();
-      final invalidField = MockFFormField('');
+    test(
+      'Async validation works and form becomes valid after corrections',
+      () async {
+        final form = MockForm();
+        final invalidField = MockFFormField('');
 
-      form.addField(invalidField);
+        form.addField(invalidField);
 
-      expect(await form.checkAsync(), false); // Initial validation fails
+        expect(await form.checkAsync(), false); // Initial validation fails
 
-      invalidField.value = 'Corrected value';
-      expect(
-          await form.checkAsync(), true); // After correction, validation passes
-    });
+        invalidField.value = 'Corrected value';
+        expect(
+          await form.checkAsync(),
+          true,
+        ); // After correction, validation passes
+      },
+    );
 
     test(
-        'Form correctly tracks multiple fields with different validation states',
-        () {
-      final form = MockForm();
-      final validField = MockFFormField('Valid value');
-      final invalidField = MockFFormField('');
+      'Form correctly tracks multiple fields with different validation states',
+      () {
+        final form = MockForm();
+        final validField = MockFFormField('Valid value');
+        final invalidField = MockFFormField('');
 
-      form
-        ..addField(validField)
-        ..addField(invalidField);
+        form
+          ..addField(validField)
+          ..addField(invalidField);
 
-      expect(form.isValid, false);
-      expect(form.firstInvalidField, invalidField);
+        expect(form.isValid, false);
+        expect(form.firstInvalidField, invalidField);
 
-      invalidField.value = 'Fixed value';
-      form.check();
-      expect(form.isValid, true);
-    });
+        invalidField.value = 'Fixed value';
+        form.check();
+        expect(form.isValid, true);
+      },
+    );
 
-    test('Subforms are correctly integrated into the validation flow',
-        () async {
-      final subForm = MockForm();
-      final form = MockForm()..addSubForm(subForm);
-      final fieldInSubForm = MockFFormField(null); // Invalid field
+    test(
+      'Subforms are correctly integrated into the validation flow',
+      () async {
+        final subForm = MockForm();
+        final form = MockForm()..addSubForm(subForm);
+        final fieldInSubForm = MockFFormField(null); // Invalid field
 
-      subForm.addField(fieldInSubForm);
+        subForm.addField(fieldInSubForm);
 
-      expect(form.isValid, false);
-      expect(await form.checkAsync(),
-          false); // Entire form is invalid due to subform
+        expect(form.isValid, false);
+        expect(
+          await form.checkAsync(),
+          false,
+        ); // Entire form is invalid due to subform
 
-      fieldInSubForm.value = 'Valid input';
-      expect(
-          await form.checkAsync(), true); // Now both form and subform are valid
-    });
+        fieldInSubForm.value = 'Valid input';
+        expect(
+          await form.checkAsync(),
+          true,
+        ); // Now both form and subform are valid
+      },
+    );
 
     test('Adding and removing fields dynamically works correctly', () {
       final form = MockForm();
@@ -232,8 +243,10 @@ void main() {
     });
 
     test('FForm Dispose', () async {
-      MockForm(fields: [MockFFormField('Valid')], subForms: [MockForm()])
-          .dispose();
+      MockForm(
+        fields: [MockFFormField('Valid')],
+        subForms: [MockForm()],
+      ).dispose();
     });
 
     test('FForm Add and Remove Listeners', () async {
